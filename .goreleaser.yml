@@ -1,0 +1,61 @@
+before:
+  hooks:
+    - go generate -v ./...
+builds:
+- id: rendersvr
+  env:
+  - CGO_ENABLED=0
+  main: server.go
+  binary: rendersvr
+  ldflags:
+  - -s -w -X github.com/bhojpur/render/cmd/server.version={{.Version}}-{{.ShortCommit}}
+- id: renderctl
+  env:
+  - CGO_ENABLED=0
+  main: client.go
+  binary: renderctl
+  flags:
+    - -tags=renderctl
+  ldflags:
+  - -s -w -X github.com/bhojpur/render/cmd/client.version={{.Version}}-{{.ShortCommit}}
+archives:
+- id: rendersvr
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    386: i386
+    amd64: x86_64
+  builds:
+  - rendersvr
+- id: renderctl
+  files:
+  - "none*"
+  format: binary
+  builds:
+  - renderctl
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    386: i386
+    amd64: x86_64
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
+release:
+  prerelease: auto
+dockers:
+  - goos: linux
+    goarch: amd64
+    goarm: ''
+    dockerfile: Dockerfile
+    image_templates:
+    - "ghcr.io/bhojpur/render:{{ .Tag }}"
+    extra_files:
+    - README.md
