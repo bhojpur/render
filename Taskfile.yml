@@ -31,42 +31,55 @@ tasks:
         cmds:
         - GOFLAGS=-mod=mod go build -o bin/renderctl client.go 
         - GOFLAGS=-mod=mod go build -o bin/rendersvr server.go 
+        - GOARCH=wasm GOOS=js GOFLAGS=-mod=mod go build -o bin/renderweb internal/hello/main.go 
+
+    build-desktop-samples:
+        desc: Build the sample application
+        cmds:
         - GOFLAGS=-mod=mod go build -o bin/renderhello internal/hello/main.go 
         - GOFLAGS=-mod=mod go build -o bin/renderg3d internal/g3d/main.go 
         - GOFLAGS=-mod=mod go build -o bin/renderview internal/view/main.go 
         - GOFLAGS=-mod=mod go build -o bin/renderplay internal/play/main.go 
 
-    build-desktop:
+    build-desktop-darwin:
         desc: Build the desktop application for current OS
         cmds:
-        - fyne package -os darwin -icon render.png
-        - fyne package -os linux -icon render.png
-        - fyne package -os windows -icon render.png
+        - guiutl package -name "Bhojpur Render" -os darwin -sourceDir internal/view/main.go -icon internal/Icon.png
+
+    build-desktop-linux:
+        desc: Build the desktop application for current OS
+        cmds:
+        - guiutl package -name "Bhojpur Render" -os linux -sourceDir internal/view/main.go -icon internal/Icon.png
+
+    build-desktop-windows:
+        desc: Build the desktop application for current OS
+        cmds:
+        - guiutl package -name "Bhojpur Render" -os windows -sourceDir internal/view/main.go -icon internal/Icon.png
 
     package-android:
         desc: Package the mobile application for Android
         cmds:
-        - fyne package -os android -appID net.bhojpur.render -icon render.png
+        - guiutl package -name "Bhojpur Render" -os android -appID net.bhojpur.render -icon internal/Icon.png
 
     package-ios:
         desc: Package the mobile application for iOS
         cmds:
-        - fyne package -os ios -appID net.bhojpur.render -icon render.png
+        - guiutl package -name "Bhojpur Render" -os ios -appID net.bhojpur.render -icon internal/Icon.png
 
     release-macos:
         desc: Release the native application for macOS App Store
         cmds:
-        - fyne release -appID net.bhojpur.render -appVersion 1.0 -appBuild 1 -category business
+        - guiutl release -appID net.bhojpur.render -appVersion 1.0 -appBuild 1 -category business
 
     release-android:
         desc: Release the mobile application for Google Play
         cmds:
-        - fyne release -os android -appID net.bhojpur.render -appVersion 1.0 -appBuild 1
+        - guiutl release -os android -appID net.bhojpur.render -appVersion 1.0 -appBuild 1
 
     release-ios:
         desc: Release the mobile application for iOS App Store
         cmds:
-        - fyne release -os ios -appID net.bhojpur.render -appVersion 1.0 -appBuild 1
+        - guiutl release -os ios -appID net.bhojpur.render -appVersion 1.0 -appBuild 1
 
     run-web-server:
         desc: Run the web server application from source code
@@ -81,18 +94,19 @@ tasks:
     run-mobile:
         desc: Run the mobile client application on emulator
         cmds:
-        - GOFLAGS=-mod=mod go run -tags mobile native/main.go
+        - GOFLAGS=-mod=mod go run -tags mobile internal/view/main.go
 
     run-desktop: 
         desc: Run the desktop application on local host
         cmds:
-        - GOFLAGS=-mod=mod go run native/main.go
+        - GOFLAGS=-mod=mod go run internal/view/main.go
 
     generate:
         desc: Generate Go source code from Protool Buffers
         cmds:
         - protoc --go_out=plugins=grpc:. --go_opt=paths=source_relative pkg/api/v1/render.proto
         - protoc --go_out=plugins=grpc:. --go_opt=paths=source_relative pkg/api/v1/render-ui.proto
+        - GOFLAGS=-mod=mod go generate ./...
 
     test:
         desc: Execute all the Unit Tests

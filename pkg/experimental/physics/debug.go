@@ -21,11 +21,11 @@ package physics
 // THE SOFTWARE.
 
 import (
-	"github.com/bhojpur/render/pkg/engine/core"
-	"github.com/bhojpur/render/pkg/engine/geometry"
-	"github.com/bhojpur/render/pkg/engine/graphic"
-	"github.com/bhojpur/render/pkg/engine/material"
-	"github.com/bhojpur/render/pkg/engine/math32"
+	"github.com/bhojpur/render/pkg/3d/core"
+	"github.com/bhojpur/render/pkg/3d/geometry"
+	"github.com/bhojpur/render/pkg/3d/graphic"
+	"github.com/bhojpur/render/pkg/3d/material"
+	"github.com/bhojpur/render/pkg/3d/math32"
 	"github.com/bhojpur/render/pkg/experimental/collision"
 	"github.com/bhojpur/render/pkg/gls"
 )

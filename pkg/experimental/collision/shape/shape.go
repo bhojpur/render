@@ -20,7 +20,7 @@ package shape
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import "github.com/bhojpur/render/pkg/engine/math32"
+import "github.com/bhojpur/render/pkg/3d/math32"
 
 // IShape is the interface for all collision shapes.
 // Shapes in this package satisfy this interface and also geometry.Geometry.

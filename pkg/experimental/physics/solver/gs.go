@@ -23,7 +23,7 @@ package solver
 // It implements a basic physics engine.
 
 import (
-	"github.com/bhojpur/render/pkg/engine/math32"
+	"github.com/bhojpur/render/pkg/3d/math32"
 )
 
 // GaussSeidel equation solver.

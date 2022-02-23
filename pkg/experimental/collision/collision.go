@@ -23,7 +23,7 @@ package collision
 // It implements collision related algorithms and data structures.
 // WARNING: Parts of this package are experimental and incomplete!
 
-import "github.com/bhojpur/render/pkg/engine/geometry"
+import "github.com/bhojpur/render/pkg/3d/geometry"
 
 // TODO collision checking function dependent on collision shapes
 

@@ -21,7 +21,7 @@ package physics
 // THE SOFTWARE.
 
 import (
-	"github.com/bhojpur/render/pkg/engine/util/logger"
+	"github.com/bhojpur/render/pkg/3d/util/logger"
 )
 
 // Package logger

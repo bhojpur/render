@@ -23,7 +23,7 @@ package constraint
 // It implements physics constraints.
 
 import (
-	"github.com/bhojpur/render/pkg/engine/math32"
+	"github.com/bhojpur/render/pkg/3d/math32"
 	"github.com/bhojpur/render/pkg/experimental/physics/equation"
 )
 

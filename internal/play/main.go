@@ -26,9 +26,9 @@ import (
 	"os"
 	"time"
 
+	"github.com/bhojpur/render/pkg/3d/audio"
+	"github.com/bhojpur/render/pkg/3d/renderer"
 	"github.com/bhojpur/render/pkg/app"
-	"github.com/bhojpur/render/pkg/engine/audio"
-	"github.com/bhojpur/render/pkg/engine/renderer"
 )
 
 // usage shows the application usage

@@ -21,7 +21,7 @@ package equation
 // THE SOFTWARE.
 
 import (
-	"github.com/bhojpur/render/pkg/engine/math32"
+	"github.com/bhojpur/render/pkg/3d/math32"
 )
 
 // RotationalMotor is a rotational motor constraint equation.

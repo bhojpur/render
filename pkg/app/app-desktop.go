@@ -27,10 +27,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/bhojpur/render/pkg/engine/audio/al"
-	"github.com/bhojpur/render/pkg/engine/audio/vorbis"
-	"github.com/bhojpur/render/pkg/engine/renderer"
-	"github.com/bhojpur/render/pkg/engine/window"
+	"github.com/bhojpur/render/pkg/3d/audio/al"
+	"github.com/bhojpur/render/pkg/3d/audio/vorbis"
+	"github.com/bhojpur/render/pkg/3d/renderer"
+	"github.com/bhojpur/render/pkg/3d/window"
 )
 
 // Desktop application defaults

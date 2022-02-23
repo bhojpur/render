@@ -28,8 +28,7 @@ import (
 	"syscall/js"
 	"unsafe"
 
-	"github.com/bhojpur/render/pkg/engine/util/wasm"
-	"github.com/pingcap/log"
+	"github.com/bhojpur/render/pkg/3d/util/wasm"
 )
 
 // GLS encapsulates the state of a WebGL context and contains

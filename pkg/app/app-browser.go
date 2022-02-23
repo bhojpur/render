@@ -25,8 +25,8 @@ package app
 
 import (
 	"fmt"
-	"github.com/bhojpur/render/pkg/engine/renderer"
-	"github.com/bhojpur/render/pkg/engine/window"
+	"github.com/bhojpur/render/pkg/3d/renderer"
+	"github.com/bhojpur/render/pkg/3d/window"
 	"syscall/js"
 	"time"
 )

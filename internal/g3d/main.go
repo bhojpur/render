@@ -23,15 +23,15 @@ package main
 import (
 	"time"
 
+	"github.com/bhojpur/render/pkg/3d/camera"
+	"github.com/bhojpur/render/pkg/3d/core"
+	"github.com/bhojpur/render/pkg/3d/gui"
+	"github.com/bhojpur/render/pkg/3d/light"
+	"github.com/bhojpur/render/pkg/3d/loader/obj"
+	"github.com/bhojpur/render/pkg/3d/math32"
+	"github.com/bhojpur/render/pkg/3d/renderer"
+	"github.com/bhojpur/render/pkg/3d/window"
 	"github.com/bhojpur/render/pkg/app"
-	"github.com/bhojpur/render/pkg/engine/camera"
-	"github.com/bhojpur/render/pkg/engine/core"
-	"github.com/bhojpur/render/pkg/engine/gui"
-	"github.com/bhojpur/render/pkg/engine/light"
-	"github.com/bhojpur/render/pkg/engine/loader/obj"
-	"github.com/bhojpur/render/pkg/engine/math32"
-	"github.com/bhojpur/render/pkg/engine/renderer"
-	"github.com/bhojpur/render/pkg/engine/window"
 	"github.com/bhojpur/render/pkg/gls"
 )
 

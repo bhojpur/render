@@ -20,7 +20,7 @@ package equation
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import "github.com/bhojpur/render/pkg/engine/math32"
+import "github.com/bhojpur/render/pkg/3d/math32"
 
 // JacobianElement contains 6 entries, 3 spatial and 3 rotational degrees of freedom.
 type JacobianElement struct {

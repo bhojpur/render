@@ -20,7 +20,7 @@ package physics
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import "github.com/bhojpur/render/pkg/engine/math32"
+import "github.com/bhojpur/render/pkg/3d/math32"
 
 // ForceField represents a force field. A force is defined for every point.
 type ForceField interface {

@@ -26,7 +26,7 @@ package equation
 // Interactive Simulations of Multibodies with Dry Frictional Contacts"
 
 import (
-	"github.com/bhojpur/render/pkg/engine/math32"
+	"github.com/bhojpur/render/pkg/3d/math32"
 )
 
 // IBody is the interface of all body types.

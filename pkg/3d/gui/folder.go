@@ -1,0 +1,210 @@
+package gui
+
+// Copyright (c) 2018 Bhojpur Consulting Private Limited, India. All rights reserved.
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+import (
+	"github.com/bhojpur/render/pkg/3d/math32"
+)
+
+// Folder represents a folder GUI element.
+type Folder struct {
+	Panel               // Embedded panel
+	label        Label  // Folder label
+	icon         Label  // Folder icon
+	contentPanel IPanel // Content panel
+	styles       *FolderStyles
+	cursorOver   bool
+	alignRight   bool
+}
+
+// FolderStyle contains the styling of a Folder.
+type FolderStyle struct {
+	PanelStyle
+	FgColor math32.Color4
+	Icons   [2]string
+}
+
+// FolderStyles contains a FolderStyle for each valid GUI state.
+type FolderStyles struct {
+	Normal   FolderStyle
+	Over     FolderStyle
+	Focus    FolderStyle
+	Disabled FolderStyle
+}
+
+// NewFolder creates and returns a pointer to a new folder widget
+// with the specified text and initial width.
+func NewFolder(text string, width float32, contentPanel IPanel) *Folder {
+
+	f := new(Folder)
+	f.Initialize(text, width, contentPanel)
+	return f
+}
+
+// Initialize initializes the Folder with the specified text and initial width
+// It is normally used when the folder is embedded in another object.
+func (f *Folder) Initialize(text string, width float32, contentPanel IPanel) {
+
+	f.Panel.Initialize(f, width, 0)
+	f.styles = &StyleDefault().Folder
+
+	// Initialize label
+	f.label.initialize(text, StyleDefault().Font)
+	f.Panel.Add(&f.label)
+
+	// Create icon
+	f.icon.initialize("", StyleDefault().FontIcon)
+	f.icon.SetFontSize(StyleDefault().Label.PointSize * 1.3)
+	f.Panel.Add(&f.icon)
+
+	// Setup content panel
+	f.contentPanel = contentPanel
+	contentPanel.GetPanel().bounded = false
+	contentPanel.GetPanel().zLayerDelta = 1
+	contentPanel.GetPanel().SetVisible(false)
+	f.Panel.Add(f.contentPanel)
+
+	// Set event callbacks
+	f.Panel.Subscribe(OnMouseDown, f.onMouse)
+	f.Panel.Subscribe(OnCursorEnter, f.onCursor)
+	f.Panel.Subscribe(OnCursorLeave, f.onCursor)
+
+	f.Subscribe(OnMouseDownOut, func(s string, i interface{}) {
+		// Hide list when clicked out
+		if f.contentPanel.Visible() {
+			f.contentPanel.SetVisible(false)
+		}
+	})
+
+	f.contentPanel.Subscribe(OnCursorEnter, func(evname string, ev interface{}) {
+		f.Dispatch(OnCursorLeave, ev)
+	})
+	f.contentPanel.Subscribe(OnCursorLeave, func(evname string, ev interface{}) {
+		f.Dispatch(OnCursorEnter, ev)
+	})
+
+	f.alignRight = true
+	f.update()
+	f.recalc()
+}
+
+// SetStyles set the folder styles overriding the default style.
+func (f *Folder) SetStyles(fs *FolderStyles) {
+
+	f.styles = fs
+	f.update()
+}
+
+// SetAlignRight sets the side of the alignment of the content panel
+// in relation to the folder.
+func (f *Folder) SetAlignRight(state bool) {
+
+	f.alignRight = state
+	f.recalc()
+}
+
+// Height returns this folder total height
+// considering the contents panel, if visible.
+func (f *Folder) Height() float32 {
+
+	height := f.Height()
+	if f.contentPanel.GetPanel().Visible() {
+		height += f.contentPanel.GetPanel().Height()
+	}
+	return height
+}
+
+// onMouse receives mouse button events over the folder panel.
+func (f *Folder) onMouse(evname string, ev interface{}) {
+
+	switch evname {
+	case OnMouseDown:
+		cont := f.contentPanel.GetPanel()
+		if !cont.Visible() {
+			cont.SetVisible(true)
+		} else {
+			cont.SetVisible(false)
+		}
+		f.update()
+		f.recalc()
+	default:
+		return
+	}
+}
+
+// onCursor receives cursor events over the folder panel
+func (f *Folder) onCursor(evname string, ev interface{}) {
+
+	switch evname {
+	case OnCursorEnter:
+		f.cursorOver = true
+		f.update()
+	case OnCursorLeave:
+		f.cursorOver = false
+		f.update()
+	default:
+		return
+	}
+}
+
+// update updates the folder visual state
+func (f *Folder) update() {
+
+	if f.cursorOver {
+		f.applyStyle(&f.styles.Over)
+		return
+	}
+	f.applyStyle(&f.styles.Normal)
+}
+
+// applyStyle applies the specified style
+func (f *Folder) applyStyle(s *FolderStyle) {
+
+	f.Panel.ApplyStyle(&s.PanelStyle)
+
+	icode := 0
+	if f.contentPanel.GetPanel().Visible() {
+		icode = 1
+	}
+	f.icon.SetText(string(s.Icons[icode]))
+	f.icon.SetColor4(&s.FgColor)
+	f.label.SetBgColor4(&s.BgColor)
+	f.label.SetColor4(&s.FgColor)
+}
+
+func (f *Folder) recalc() {
+
+	// icon position
+	f.icon.SetPosition(0, 0)
+
+	// Label position and width
+	f.label.SetPosition(f.icon.Width()+4, 0)
+	f.Panel.SetContentHeight(f.label.Height())
+
+	// Sets position of the base folder scroller panel
+	cont := f.contentPanel.GetPanel()
+	if f.alignRight {
+		cont.SetPosition(0, f.Panel.Height())
+	} else {
+		dx := cont.Width() - f.Panel.Width()
+		cont.SetPosition(-dx, f.Panel.Height())
+	}
+}
