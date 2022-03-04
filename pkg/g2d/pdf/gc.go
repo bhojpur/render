@@ -1,5 +1,25 @@
 package pdf
 
+// Copyright (c) 2018 Bhojpur Consulting Private Limited, India. All rights reserved.
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
 import (
 	"bytes"
 	"image"
@@ -38,11 +58,11 @@ var (
 	white      color.Color = color.RGBA{255, 255, 255, 255}
 )
 
-// NewPdf creates a new pdf document with the draw2d fontfolder, adds
+// NewPdf creates a new pdf document with the d2d fontfolder, adds
 // a page and set fill color to white.
 func NewPdf(orientationStr, unitStr, sizeStr string) *document.Bdf {
 	pdf := document.New(orientationStr, unitStr, sizeStr, d2d.GetFontFolder())
-	// to be compatible with draw2d
+	// to be compatible with d2d
 	pdf.SetMargins(0, 0, 0)
 	pdf.SetDrawColor(0, 0, 0)
 	pdf.SetFillColor(255, 255, 255)
@@ -53,7 +73,7 @@ func NewPdf(orientationStr, unitStr, sizeStr string) *document.Bdf {
 	return pdf
 }
 
-// rgb converts a color (used by draw2d) into 3 int (used by gofpdf)
+// rgb converts a color (used by d2d) into 3 int (used by Bdf)
 func rgb(c color.Color) (int, int, int) {
 	r, g, b, _ := c.RGBA()
 	return int(float64(r) * c255), int(float64(g) * c255), int(float64(b) * c255)
@@ -74,7 +94,7 @@ func clearRect(gc *GraphicContext, x1, y1, x2, y2 float64) {
 }
 
 // GraphicContext implements the d2d.GraphicContext interface
-// It provides draw2d with a pdf backend (based on gofpdf)
+// It provides d2d with a pdf backend (based on Bdf)
 type GraphicContext struct {
 	*base.StackGraphicContext
 	pdf *document.Bdf
@@ -129,8 +149,7 @@ func (gc *GraphicContext) SetDPI(dpi int) {
 }
 
 // GetDPI returns the DPI which influences the font size.
-// (Note that gofpdf uses a fixed dpi of 72:
-// https://godoc.org/code.google.com/p/gofpdf#Fpdf.PointConvert)
+// (Note that Bdf uses a fixed dpi of 72:
 func (gc *GraphicContext) GetDPI() int {
 	return gc.DPI
 }
@@ -153,7 +172,7 @@ func (gc *GraphicContext) GetStringBounds(s string) (left, top, right, bottom fl
 
 // CreateStringPath creates a path from the string s at x, y, and returns the string width.
 func (gc *GraphicContext) CreateStringPath(text string, x, y float64) (cursor float64) {
-	//fpdf uses the top left corner
+	//Bdf uses the top left corner
 	left, top, right, bottom := gc.GetStringBounds(text)
 	w := right - left
 	h := bottom - top
@@ -257,7 +276,7 @@ func (gc *GraphicContext) SetFillColor(c color.Color) {
 // SetFont is unsupported by the pdf graphic context, use SetFontData
 // instead.
 func (gc *GraphicContext) SetFont(font *truetype.Font) {
-	// TODO: what to do with this api conflict between draw2d and gofpdf?!
+	// TODO: what to do with this api conflict between d2d and Bdf?!
 }
 
 // SetFontData sets the current font used to draw text. Always use

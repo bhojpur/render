@@ -1,5 +1,25 @@
 package svg
 
+// Copyright (c) 2018 Bhojpur Consulting Private Limited, India. All rights reserved.
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
 import (
 	"image"
 	"log"
@@ -22,7 +42,7 @@ const (
 )
 
 // GraphicContext implements the d2d.GraphicContext interface
-// It provides draw2d with a svg backend
+// It provides d2d with a svg backend
 type GraphicContext struct {
 	*base.StackGraphicContext
 	FontCache  d2d.FontCache
@@ -144,8 +164,8 @@ func (gc *GraphicContext) ClearRect(x1, y1, x2, y2 int) {
 	gc.svg.Groups = []*Group{newGroup}
 }
 
-// NOTE following  two functions and soe other further below copied from dwra2d{img|gl}
-// TODO move them all to common draw2dbase?
+// NOTE following  two functions and soe other further below copied from d2d{img|gl}
+// TODO move them all to common base?
 
 // CreateStringPath creates a path from the string s at x, y, and returns the string width.
 // The text is placed so that the left edge of the em square of the first character of s
