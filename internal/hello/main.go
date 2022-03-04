@@ -23,19 +23,19 @@ package main
 import (
 	"time"
 
-	"github.com/bhojpur/render/pkg/3d/camera"
-	"github.com/bhojpur/render/pkg/3d/core"
-	"github.com/bhojpur/render/pkg/3d/geometry"
-	"github.com/bhojpur/render/pkg/3d/graphic"
-	"github.com/bhojpur/render/pkg/3d/gui"
-	"github.com/bhojpur/render/pkg/3d/light"
-	"github.com/bhojpur/render/pkg/3d/material"
-	"github.com/bhojpur/render/pkg/3d/math32"
-	"github.com/bhojpur/render/pkg/3d/renderer"
-	"github.com/bhojpur/render/pkg/3d/util/helper"
-	"github.com/bhojpur/render/pkg/3d/window"
 	"github.com/bhojpur/render/pkg/app"
+	"github.com/bhojpur/render/pkg/g3d/camera"
+	"github.com/bhojpur/render/pkg/g3d/core"
+	"github.com/bhojpur/render/pkg/g3d/geometry"
+	"github.com/bhojpur/render/pkg/g3d/graphic"
+	"github.com/bhojpur/render/pkg/g3d/gui"
+	"github.com/bhojpur/render/pkg/g3d/light"
+	"github.com/bhojpur/render/pkg/g3d/material"
+	"github.com/bhojpur/render/pkg/g3d/renderer"
+	"github.com/bhojpur/render/pkg/g3d/util/helper"
+	"github.com/bhojpur/render/pkg/g3d/window"
 	"github.com/bhojpur/render/pkg/gls"
+	"github.com/bhojpur/render/pkg/math32"
 )
 
 func main() {

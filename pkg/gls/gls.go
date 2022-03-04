@@ -33,7 +33,7 @@ import (
 	"math"
 	"unsafe"
 
-	"github.com/bhojpur/render/pkg/3d/util/logger"
+	"github.com/bhojpur/render/pkg/g3d/util/logger"
 )
 
 // Package logger

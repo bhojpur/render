@@ -21,14 +21,14 @@ package physics
 // THE SOFTWARE.
 
 import (
-	"github.com/bhojpur/render/pkg/3d/core"
-	"github.com/bhojpur/render/pkg/3d/math32"
 	"github.com/bhojpur/render/pkg/experimental/collision"
 	"github.com/bhojpur/render/pkg/experimental/collision/shape"
 	"github.com/bhojpur/render/pkg/experimental/physics/constraint"
 	"github.com/bhojpur/render/pkg/experimental/physics/equation"
 	"github.com/bhojpur/render/pkg/experimental/physics/object"
 	"github.com/bhojpur/render/pkg/experimental/physics/solver"
+	"github.com/bhojpur/render/pkg/g3d/core"
+	"github.com/bhojpur/render/pkg/math32"
 )
 
 // Simulation represents a physics simulation.

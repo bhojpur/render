@@ -23,12 +23,12 @@ package collision
 import (
 	"sort"
 
-	"github.com/bhojpur/render/pkg/3d/camera"
-	"github.com/bhojpur/render/pkg/3d/core"
-	"github.com/bhojpur/render/pkg/3d/graphic"
-	"github.com/bhojpur/render/pkg/3d/material"
-	"github.com/bhojpur/render/pkg/3d/math32"
+	"github.com/bhojpur/render/pkg/g3d/camera"
+	"github.com/bhojpur/render/pkg/g3d/core"
+	"github.com/bhojpur/render/pkg/g3d/graphic"
+	"github.com/bhojpur/render/pkg/g3d/material"
 	"github.com/bhojpur/render/pkg/gls"
+	"github.com/bhojpur/render/pkg/math32"
 )
 
 // Raycaster represents an empty object that can cast rays and check for ray intersections.

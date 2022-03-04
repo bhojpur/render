@@ -21,7 +21,7 @@ package equation
 // THE SOFTWARE.
 
 import (
-	"github.com/bhojpur/render/pkg/3d/math32"
+	"github.com/bhojpur/render/pkg/math32"
 )
 
 // Contact is a contact/non-penetration constraint equation.

@@ -20,7 +20,7 @@ package shape
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import "github.com/bhojpur/render/pkg/3d/math32"
+import "github.com/bhojpur/render/pkg/math32"
 
 // Plane is an analytical collision Plane.
 // A plane, facing in the +Z direction. The plane has its surface at z=0 and everything below z=0 is assumed to be solid.

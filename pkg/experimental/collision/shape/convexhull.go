@@ -21,9 +21,9 @@ package shape
 // THE SOFTWARE.
 
 import (
-	"github.com/bhojpur/render/pkg/3d/geometry"
-	"github.com/bhojpur/render/pkg/3d/math32"
 	"github.com/bhojpur/render/pkg/experimental/collision"
+	"github.com/bhojpur/render/pkg/g3d/geometry"
+	"github.com/bhojpur/render/pkg/math32"
 )
 
 // ConvexHull is a convex triangle-based geometry used for collision detection and contact resolution.

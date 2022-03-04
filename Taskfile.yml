@@ -31,7 +31,8 @@ tasks:
         cmds:
         - GOFLAGS=-mod=mod go build -o bin/renderctl client.go 
         - GOFLAGS=-mod=mod go build -o bin/rendersvr server.go 
-        - GOARCH=wasm GOOS=js GOFLAGS=-mod=mod go build -o bin/renderweb internal/hello/main.go 
+        - GOFLAGS=-mod=mod tinygo build -o ./pkg/webui/main.wasm -target wasm ./pkg/webui/main.go 
+        - cp ./pkg/webui/main.wasm internal/wasm
 
     build-desktop-samples:
         desc: Build the sample application

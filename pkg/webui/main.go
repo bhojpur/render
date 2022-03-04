@@ -27,9 +27,9 @@ import (
 	"syscall/js"
 	"time"
 
-	"github.com/bhojpur/render/pkg/canvas"
-	"github.com/llgcode/draw2d/draw2dimg"
-	"github.com/llgcode/draw2d/draw2dkit"
+	"github.com/bhojpur/render/pkg/g2d/canvas"
+	"github.com/bhojpur/render/pkg/g2d/img"
+	"github.com/bhojpur/render/pkg/g2d/kit"
 )
 
 type gameState struct{ laserX, laserY, directionX, directionY, laserSize float64 }
@@ -71,7 +71,7 @@ func doEvery(d time.Duration, f func(time.Time)) {
 }
 
 // Called from the 'requestAnnimationFrame' function.   It may also be called seperatly from a 'doEvery' function, if the user prefers drawing to be seperate from the annimationFrame callback
-func Render(gc *draw2dimg.GraphicContext) bool {
+func Render(gc *img.GraphicContext) bool {
 
 	if gs.laserX+gs.directionX > width-gs.laserSize || gs.laserX+gs.directionX < gs.laserSize {
 		gs.directionX = -gs.directionX
@@ -92,7 +92,7 @@ func Render(gc *draw2dimg.GraphicContext) bool {
 
 	gc.BeginPath()
 	//gc.ArcTo(gs.laserX, gs.laserY, gs.laserSize, gs.laserSize, 0, math.Pi*2)
-	draw2dkit.Circle(gc, gs.laserX, gs.laserY, gs.laserSize)
+	kit.Circle(gc, gs.laserX, gs.laserY, gs.laserSize)
 	gc.FillStroke()
 	gc.Close()
 

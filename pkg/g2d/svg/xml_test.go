@@ -1,0 +1,105 @@
+package svg
+
+// It gives test coverage with the command:
+// go test -cover ./... | grep -v "no test"
+
+import (
+	"encoding/xml"
+	"testing"
+)
+
+// Test basic encoding of svg/xml elements
+func TestXml(t *testing.T) {
+
+	svg := NewSvg()
+	svg.Groups = []*Group{&Group{
+		Groups: []*Group{
+			&Group{}, // nested groups
+			&Group{},
+		},
+		Texts: []*Text{
+			&Text{Text: "Hello"},                        // text
+			&Text{Text: "world", Style: "opacity: 0.5"}, // text with style
+		},
+		Paths: []*Path{
+			&Path{Desc: "M100,200 C100,100 250,100 250,200 S400,300 400,200"}, // simple path
+			&Path{}, // empty path
+		},
+	}}
+
+	expectedOut := `<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="none">
+  <defs></defs>
+  <g>
+    <g></g>
+    <g></g>
+    <path d="M100,200 C100,100 250,100 250,200 S400,300 400,200"></path>
+    <path d=""></path>
+    <text>Hello</text>
+    <text style="opacity: 0.5">world</text>
+  </g>
+</svg>`
+
+	out, err := xml.MarshalIndent(svg, "", "  ")
+
+	if err != nil {
+		t.Error(err)
+	}
+	if string(out) != expectedOut {
+		t.Errorf("svg output is not as expected\n"+
+			"got:\n%s\n\n"+
+			"want:\n%s\n",
+			string(out),
+			expectedOut,
+		)
+	}
+}
+
+func TestXml_WidthHeight(t *testing.T) {
+	expect := `<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="none">
+  <defs></defs>
+</svg>`
+	svg := NewSvg()
+	subtest := func(t *testing.T) {
+		out, err := xml.MarshalIndent(svg, "", "  ")
+		if err != nil {
+			t.Fatal(err)
+		}
+		if string(out) != expect {
+			t.Errorf("svg output is not as expected\n"+
+				"got:\n%s\n\n"+
+				"want:\n%s\n",
+				string(out),
+				expect)
+		}
+	}
+	t.Run("no width, height", subtest)
+
+	expect = `<svg xmlns="http://www.w3.org/2000/svg" width="640px" height="480" fill="none" stroke="none">
+  <defs></defs>
+</svg>`
+	svg.Width, svg.Height = "640px", "480"
+	t.Run("with width, height", subtest)
+}
+
+func TestXml_ViewBox(t *testing.T) {
+	expect := `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 100 -10 -100" fill="none" stroke="none">
+  <defs></defs>
+</svg>`
+
+	svg := NewSvg()
+	subtest := func(t *testing.T) {
+		out, err := xml.MarshalIndent(svg, "", "  ")
+		if err != nil {
+			t.Fatal(err)
+		}
+		if string(out) != expect {
+			t.Errorf("svg output is not as expected\n"+
+				"got:\n%s\n\n"+
+				"want:\n%s\n",
+				string(out),
+				expect)
+		}
+	}
+	svg.ViewBox = "0 100 -10 -100"
+	t.Run("with viewBox", subtest)
+}

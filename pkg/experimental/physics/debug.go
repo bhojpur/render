@@ -21,13 +21,13 @@ package physics
 // THE SOFTWARE.
 
 import (
-	"github.com/bhojpur/render/pkg/3d/core"
-	"github.com/bhojpur/render/pkg/3d/geometry"
-	"github.com/bhojpur/render/pkg/3d/graphic"
-	"github.com/bhojpur/render/pkg/3d/material"
-	"github.com/bhojpur/render/pkg/3d/math32"
 	"github.com/bhojpur/render/pkg/experimental/collision"
+	"github.com/bhojpur/render/pkg/g3d/core"
+	"github.com/bhojpur/render/pkg/g3d/geometry"
+	"github.com/bhojpur/render/pkg/g3d/graphic"
+	"github.com/bhojpur/render/pkg/g3d/material"
 	"github.com/bhojpur/render/pkg/gls"
+	"github.com/bhojpur/render/pkg/math32"
 )
 
 // This file contains helpful infrastructure for debugging physics

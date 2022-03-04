@@ -20,7 +20,7 @@ package shape
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import "github.com/bhojpur/render/pkg/3d/math32"
+import "github.com/bhojpur/render/pkg/math32"
 
 // Sphere is an analytical collision sphere.
 type Sphere struct {

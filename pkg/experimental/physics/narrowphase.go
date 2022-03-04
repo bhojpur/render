@@ -21,10 +21,10 @@ package physics
 // THE SOFTWARE.
 
 import (
-	"github.com/bhojpur/render/pkg/3d/math32"
 	"github.com/bhojpur/render/pkg/experimental/collision/shape"
 	"github.com/bhojpur/render/pkg/experimental/physics/equation"
 	"github.com/bhojpur/render/pkg/experimental/physics/object"
+	"github.com/bhojpur/render/pkg/math32"
 )
 
 // Narrowphase

@@ -25,10 +25,11 @@ package app
 
 import (
 	"fmt"
-	"github.com/bhojpur/render/pkg/3d/renderer"
-	"github.com/bhojpur/render/pkg/3d/window"
 	"syscall/js"
 	"time"
+
+	"github.com/bhojpur/render/pkg/g3d/renderer"
+	"github.com/bhojpur/render/pkg/g3d/window"
 )
 
 // Default canvas Id

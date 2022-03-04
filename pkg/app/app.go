@@ -22,7 +22,7 @@ package app
 
 // It implements a cross-platform Bhojpur Render application.
 
-import "github.com/bhojpur/render/pkg/3d/util/logger"
+import "github.com/bhojpur/render/pkg/g3d/util/logger"
 
 // Package logger
 var log = logger.New("APP", logger.Default)

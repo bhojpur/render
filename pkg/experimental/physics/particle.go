@@ -21,8 +21,8 @@ package physics
 // THE SOFTWARE.
 
 //import (
-//	"github.com/bhojpur/render/pkg/3d/math32"
-//	"github.com/bhojpur/render/pkg/3d/graphic"
+//	"github.com/bhojpur/render/pkg/math32"
+//	"github.com/bhojpur/render/pkg/g3d/graphic"
 //)
 //
 //// Particle represents a physics-driven particle.

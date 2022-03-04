@@ -23,9 +23,9 @@ package utils
 import (
 	"fmt"
 
-	"github.com/bhojpur/render/pkg/3d/gui"
-	"github.com/bhojpur/render/pkg/3d/math32"
 	"github.com/bhojpur/render/pkg/app"
+	"github.com/bhojpur/render/pkg/g3d/gui"
+	"github.com/bhojpur/render/pkg/math32"
 )
 
 type ErrorDialog struct {
