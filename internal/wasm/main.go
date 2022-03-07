@@ -21,24 +21,13 @@ package main
 // THE SOFTWARE.
 
 import (
-	"fmt"
 	"net/http"
 
 	ctxsvr "github.com/bhojpur/web/pkg/context"
 	utils "github.com/bhojpur/web/pkg/core/utils"
 	websvr "github.com/bhojpur/web/pkg/engine"
 	"github.com/bhojpur/web/pkg/filter/cors"
-	"github.com/bhojpur/web/pkg/synthesis"
-	test "github.com/bhojpur/web/test"
 )
-
-func indexHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "भोजपुर जिला घर बा, तब कौना बात के डर बा !!")
-}
-
-func namasteHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "नमस्ते, %s!", r.FormValue("नाम"))
-}
 
 func main() {
 	websvr.InsertFilter("*", websvr.BeforeRouter, cors.Allow(&cors.Options{
@@ -56,22 +45,9 @@ func main() {
 		}
 	})
 
-	//websvr.DelStaticPath("/static")
-	websvr.SetStaticPath("/static", "../../pkg/webui")
 	websvr.InsertFilter("/", websvr.BeforeRouter, StaticContentHandler) // must have this for default page
 	websvr.InsertFilter("/*", websvr.BeforeRouter, StaticContentHandler)
 	websvr.Run() // custom configuration read fron ../conf/app.conf file
-	websvr.AddFuncMap("*", http.HandlerFunc(indexHandler))
-	websvr.AddFuncMap("/अभिवादन/:नाम", http.HandlerFunc(namasteHandler))
-	websvr.AddFuncMap("/data",
-		http.FileServer(
-			&synthesis.AssetFS{
-				Asset:     test.Asset,
-				AssetDir:  test.AssetDir,
-				AssetInfo: test.AssetInfo,
-				Prefix:    "data",
-				Fallback:  "index.html",
-			}))
 }
 
 func StaticContentHandler(ctx *ctxsvr.Context) {
