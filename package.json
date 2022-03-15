@@ -1,0 +1,55 @@
+{
+    "version": "1.0.0",
+    "name": "bhojpur-render",
+    "description": "A javascript library for WebGL aware applications",
+    "sideEffects": false,
+    "type": "module",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "exports": {
+      ".": "./dist/index.js",
+      "./common": "./dist/common.js",
+      "./bhojpur": "./dist/bhojpur.js"
+    },
+    "types": "./dist/index.d.ts",
+    "homepage": "https://www.bhojpur-consulting.com",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://desk.bhojpur-consulting.com"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/bhojpur/render.git"
+    },
+    "contributors": [
+      {
+        "name": "Shashi Bhushan Rai",
+        "email": "info@bhojpur-consulting.com"
+      }
+    ],
+    "scripts": {
+      "test": "mocha --require @babel/register --recursive spec",
+      "doc": "jsdoc -c jsdoc.config.json",
+      "update-license-version": "node utils/update-license-version.js",
+      "build-umd": "rollup -c",
+      "build-render": "babel src -d dist/render",
+      "build-dts": "tsc --allowJs --declaration --emitDeclarationOnly --module amd --outFile ./dist/index.d.ts ./pkg/javascript/index.js ./pkg/javascript/types.d.ts && node ./utils/bundle-dts.js && tsc --noEmit ./dist/index.d.ts",
+      "build": "del dist && npm run update-license-version && npm run build-umd && npm run build-render && npm run build-dts && node ./utils/build.js",
+      "prepare": "npm run build"
+    },
+    "devDependencies": {
+      "@babel/cli": "^7.14.3",
+      "@babel/core": "^7.14.3",
+      "@babel/preset-env": "^7.14.3",
+      "@babel/register": "^7.13.16",
+      "@rollup/plugin-babel": "^5.3.0",
+      "del-cli": "^3.0.0",
+      "jsdoc": "^3.6.7",
+      "mocha": "^8.4.0",
+      "node-libs-browser": "^2.2.1",
+      "rollup": "^2.50.5",
+      "rollup-plugin-size-snapshot": "^0.12.0",
+      "rollup-plugin-terser": "^7.0.2",
+      "typescript": "^4.3.2"
+    }
+  }

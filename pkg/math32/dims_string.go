@@ -2,32 +2,18 @@
 
 package math32
 
-// Copyright (c) 2018 Bhojpur Consulting Private Limited, India. All rights reserved.
+import "strconv"
 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
-import (
-	"errors"
-	"strconv"
-)
-
-var _ = errors.New("dummy error")
+func _() {
+	// An "invalid array index" compiler error signifies that the constant values have changed.
+	// Re-run the stringer command to generate them again.
+	var x [1]struct{}
+	_ = x[X-0]
+	_ = x[Y-1]
+	_ = x[Z-2]
+	_ = x[W-3]
+	_ = x[DimsN-4]
+}
 
 const _Dims_name = "XYZWDimsN"
 
@@ -38,14 +24,4 @@ func (i Dims) String() string {
 		return "Dims(" + strconv.FormatInt(int64(i), 10) + ")"
 	}
 	return _Dims_name[_Dims_index[i]:_Dims_index[i+1]]
-}
-
-func (i *Dims) FromString(s string) error {
-	for j := 0; j < len(_Dims_index)-1; j++ {
-		if s == _Dims_name[_Dims_index[j]:_Dims_index[j+1]] {
-			*i = Dims(j)
-			return nil
-		}
-	}
-	return errors.New("String: " + s + " is not a valid option for type: Dims")
 }

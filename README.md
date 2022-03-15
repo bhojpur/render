@@ -1,13 +1,14 @@
 # Bhojpur Render - Model Processing Engine
 
-The Bhojpur Render is a high performance 2D/3D graphic rendering engine applied within the [Bhojpur.NET Platform](https://github.com/bhojpur/platform) for delivery of collaborative and distributed applications or services. It features `client-side` and `server-side` framework for `desktop`, `web`, and `mobile` application development. 
+The `Bhojpur Render` is a high performance 2D/3D graphic rendering engine applied within the [Bhojpur.NET Platform](https://github.com/bhojpur/platform) for delivery of collaborative and distributed applications or services. It features `client-side` and `server-side` framework for `desktop`, `web`, and `mobile` application development.
 
 ## Key Features
 
 This rendering framework provides the following capabilities
 
 - client-side rendering library for desktop applications (e.g., macOS, Linux, Windows)
-- server-side rendering library for web-based delivery
+- client-side 3D Model Editor for web using a Javascript engine
+- server-side rendering library for web-based applications
 
 ## Pre-requisites
 

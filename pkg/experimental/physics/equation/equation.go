@@ -212,7 +212,7 @@ func (e *Equation) ComputeGq() float32 {
 	return (&spatA).Dot(&xi) + (&spatB).Dot(&xj)
 }
 
-// ComputeGW computes G*W, where W are the body velocities.
+// ComputeGW computes G*W, where W are the body spatial.
 func (e *Equation) ComputeGW() float32 {
 
 	vA := e.bA.Velocity()

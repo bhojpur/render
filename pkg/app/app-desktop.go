@@ -51,8 +51,8 @@ type Application struct {
 	frameDelta     time.Duration      // Duration of last frame
 }
 
-// App returns the Application singleton, creating it the first time.
-func App() *Application {
+// BhojpurApp3D returns the Application singleton, creating it the first time.
+func BhojpurApp3D() *Application {
 
 	// Return singleton if already created
 	if a != nil {

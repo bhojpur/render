@@ -30,7 +30,7 @@ import (
 	"time"
 
 	"github.com/bhojpur/render/internal/view/utils"
-	"github.com/bhojpur/render/pkg/app"
+	engine "github.com/bhojpur/render/pkg/app"
 	"github.com/bhojpur/render/pkg/g3d/camera"
 	"github.com/bhojpur/render/pkg/g3d/core"
 	"github.com/bhojpur/render/pkg/g3d/gui"
@@ -46,7 +46,7 @@ import (
 )
 
 type bhojpurView struct {
-	*app.Application                    // Embedded application object
+	*engine.Application                 // Embedded application object
 	fs               *utils.FileSelect  // File selection dialog
 	ed               *utils.ErrorDialog // Error dialog
 	axes             *helper.Axes       // Axis helper
@@ -70,9 +70,9 @@ func main() {
 	// Parse command line parameters
 	flag.Usage = usage
 
-	// Creates Bhojpur Render application
+	// Creates a Bhojpur Render 3D application
 	gv := new(bhojpurView)
-	a := app.App()
+	a := engine.BhojpurApp3D()
 	gv.Application = a
 	gv.scene = core.NewNode()
 

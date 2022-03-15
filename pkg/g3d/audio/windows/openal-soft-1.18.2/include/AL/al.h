@@ -395,7 +395,7 @@ typedef void ALvoid;
  * Range:   [0.0 - ]
  * Default: 1.0
  *
- * Scale for source and listener velocities.
+ * Scale for source and listener spatial.
  */
 #define AL_DOPPLER_FACTOR                        0xC000
 AL_API void AL_APIENTRY alDopplerFactor(ALfloat value);

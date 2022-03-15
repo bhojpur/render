@@ -33,7 +33,7 @@ import (
 )
 
 // Default canvas Id
-const canvasId = "bhojpur-canvas"
+const defaultCanvasId = "canvas"
 
 // Application
 type Application struct {
@@ -47,8 +47,8 @@ type Application struct {
 	cbid           js.Value
 }
 
-// App returns the Application singleton, creating it the first time.
-func App() *Application {
+// BhojpurApp3D returns the Application singleton, creating it the first time.
+func BhojpurApp3D() *Application {
 
 	// Return singleton if already created
 	if a != nil {
@@ -56,7 +56,7 @@ func App() *Application {
 	}
 	a = new(Application)
 	// Initialize window
-	err := window.Init(canvasId)
+	err := window.Init(defaultCanvasId)
 	if err != nil {
 		panic(err)
 	}

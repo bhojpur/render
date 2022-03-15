@@ -60,7 +60,7 @@ type Body struct {
 	prevQuaternion   *math32.Quaternion
 	interpQuaternion *math32.Quaternion // Interpolated orientation of the body.
 
-	// Linear and angular velocities
+	// Linear and angular spatial
 	velocity            *math32.Vector3 // Linear velocity (World space velocity of the body.)
 	initVelocity        *math32.Vector3 // Initial linear velocity (World space velocity of the body.)
 	angularVelocity     *math32.Vector3 // Angular velocity of the body, in world space. Think of the angular velocity as a vector, which the body rotates around. The length of this vector determines how fast (in radians per second) the body rotates.
@@ -192,7 +192,7 @@ func NewBody(igraphic graphic.IGraphic) *Body {
 	b.interpQuaternion = quat.Clone()
 	b.initQuaternion = quat.Clone()
 
-	// Linear and angular velocities
+	// Linear and angular spatial
 	b.velocity = math32.NewVec3()
 	b.initVelocity = math32.NewVec3()
 	b.angularVelocity = math32.NewVec3()
@@ -356,7 +356,7 @@ func (b *Body) WakeUpAfterNarrowphase() bool {
 	return b.wakeUpAfterNarrowphase
 }
 
-// ApplyVelocityDeltas adds the specified deltas to the body's linear and angular velocities.
+// ApplyVelocityDeltas adds the specified deltas to the body's linear and angular spatial.
 func (b *Body) ApplyVelocityDeltas(linearD, angularD *math32.Vector3) {
 
 	b.velocity.Add(linearD.Multiply(b.linearFactor))
@@ -730,13 +730,13 @@ func (b *Body) Integrate(dt float32, quatNormalize, quatNormalizeFast bool) {
 		return
 	}
 
-	// Integrate force over mass (acceleration) to obtain estimate for instantaneous velocities
+	// Integrate force over mass (acceleration) to obtain estimate for instantaneous spatial
 	iMdt := b.invMass * dt
 	b.velocity.X += b.force.X * iMdt * b.linearFactor.X
 	b.velocity.Y += b.force.Y * iMdt * b.linearFactor.Y
 	b.velocity.Z += b.force.Z * iMdt * b.linearFactor.Z
 
-	// Integrate inverse angular mass times torque to obtain estimate for instantaneous angular velocities
+	// Integrate inverse angular mass times torque to obtain estimate for instantaneous angular spatial
 	e := b.invRotInertiaWorld
 	tx := b.torque.X * b.angularFactor.X
 	ty := b.torque.Y * b.angularFactor.Y

@@ -33,6 +33,9 @@ import (
 	"github.com/bhojpur/render/pkg/gls"
 )
 
+// Default canvas Id
+const defaultCanvasId = "canvas"
+
 // Keycodes
 const (
 	KeyUnknown = Key(iota)
@@ -330,8 +333,8 @@ const (
 	CursorDisabled
 )
 
-// WebGlCanvas is a browser-based WebGL canvas.
-type WebGlCanvas struct {
+// WebGlCanvas3D is a browser-based WebGL canvas.
+type WebGlCanvas3D struct {
 	core.Dispatcher          // Embedded event dispatcher
 	canvas          js.Value // Associated WebGL canvas
 	gls             *gls.GLS // Associated WebGL state
@@ -359,8 +362,8 @@ type WebGlCanvas struct {
 	winBlur    js.Func
 }
 
-// Init initializes the WebGlCanvas singleton.
-// If canvasId is provided, the pre-existing WebGlCanvas with that id is used.
+// Init initializes the WebGlCanvas3D singleton.
+// If canvasId is provided, the pre-existing WebGlCanvas3D with that id is used.
 // If canvasId is the empty string then it creates a new WebGL canvas.
 func Init(canvasId string) error {
 
@@ -370,13 +373,13 @@ func Init(canvasId string) error {
 	}
 
 	// Create wrapper window with dispatcher
-	w := new(WebGlCanvas)
+	w := new(WebGlCanvas3D)
 	w.Dispatcher.Initialize()
 
 	// Create or get WebGlCanvas
 	doc := js.Global().Get("document")
 	if canvasId == "" {
-		w.canvas = doc.Call("createElement", "WebGlCanvas")
+		w.canvas = doc.Call("createElement", defaultCanvasId)
 	} else {
 		w.canvas = doc.Call("getElementById", canvasId)
 		if wasm.Equal(w.canvas, js.Null()) {
@@ -385,9 +388,9 @@ func Init(canvasId string) error {
 	}
 
 	// Get reference to WebGL context
-	webglCtx := w.canvas.Call("getContext", "webgl2")
+	webglCtx := w.canvas.Call("getContext", "webgl")
 	if wasm.Equal(webglCtx, js.Undefined()) {
-		return fmt.Errorf("Browser doesn't support WebGL2")
+		return fmt.Errorf("your web browser doesn't support WebGL")
 	}
 
 	// Create WebGL state
@@ -534,33 +537,33 @@ func getModifiers(event js.Value) ModifierKey {
 }
 
 // Canvas returns the associated WebGL WebGlCanvas.
-func (w *WebGlCanvas) Canvas() js.Value {
+func (w *WebGlCanvas3D) Canvas() js.Value {
 
 	return w.canvas
 }
 
 // Gls returns the associated OpenGL state
-func (w *WebGlCanvas) Gls() *gls.GLS {
+func (w *WebGlCanvas3D) Gls() *gls.GLS {
 
 	return w.gls
 }
 
 // FullScreen returns whether this canvas is fullscreen
-func (w *WebGlCanvas) FullScreen() bool {
+func (w *WebGlCanvas3D) FullScreen() bool {
 
 	// TODO
 	return false
 }
 
 // SetFullScreen sets this window full screen state for the primary monitor
-func (w *WebGlCanvas) SetFullScreen(full bool) {
+func (w *WebGlCanvas3D) SetFullScreen(full bool) {
 
 	// TODO
 	// Make it so that the first user interaction (e.g. click) should set the canvas as fullscreen.
 }
 
 // Destroy destroys the WebGL canvas and removes all event listeners.
-func (w *WebGlCanvas) Destroy() {
+func (w *WebGlCanvas3D) Destroy() {
 
 	// Remove event listeners
 	w.canvas.Set("oncontextmenu", js.Null())
@@ -588,53 +591,53 @@ func (w *WebGlCanvas) Destroy() {
 }
 
 // GetFramebufferSize returns the framebuffer size.
-func (w *WebGlCanvas) GetFramebufferSize() (width int, height int) {
+func (w *WebGlCanvas3D) GetFramebufferSize() (width int, height int) {
 
 	// TODO device pixel ratio
 	return w.canvas.Get("width").Int(), w.canvas.Get("height").Int()
 }
 
 // GetSize returns this window's size in screen coordinates.
-func (w *WebGlCanvas) GetSize() (width int, height int) {
+func (w *WebGlCanvas3D) GetSize() (width int, height int) {
 
 	return w.canvas.Get("width").Int(), w.canvas.Get("height").Int()
 }
 
 // SetSize sets the size, in screen coordinates, of the canvas.
-func (w *WebGlCanvas) SetSize(width int, height int) {
+func (w *WebGlCanvas3D) SetSize(width int, height int) {
 
 	w.canvas.Set("width", width)
 	w.canvas.Set("height", height)
 }
 
 // Scale returns this window's DPI scale factor (FramebufferSize / Size)
-func (w *WebGlCanvas) GetScale() (x float64, y float64) {
+func (w *WebGlCanvas3D) GetScale() (x float64, y float64) {
 
 	// TODO device pixel ratio
 	return 1, 1
 }
 
 // CreateCursor creates a new custom cursor and returns an int handle.
-func (w *WebGlCanvas) CreateCursor(imgFile string, xhot, yhot int) (Cursor, error) {
+func (w *WebGlCanvas3D) CreateCursor(imgFile string, xhot, yhot int) (Cursor, error) {
 
 	// TODO
 	return 0, nil
 }
 
 // SetCursor sets the window's cursor to a standard one
-func (w *WebGlCanvas) SetCursor(cursor Cursor) {
+func (w *WebGlCanvas3D) SetCursor(cursor Cursor) {
 
 	// TODO
 }
 
 // DisposeAllCursors deletes all existing custom cursors.
-func (w *WebGlCanvas) DisposeAllCustomCursors() {
+func (w *WebGlCanvas3D) DisposeAllCustomCursors() {
 
 	// TODO
 }
 
 // SetInputMode changes specified input to specified state
-//func (w *WebGlCanvas) SetInputMode(mode InputMode, state int) {
+//func (w *WebGlCanvas3D) SetInputMode(mode InputMode, state int) {
 //
 //	// TODO
 //	// Hide cursor etc

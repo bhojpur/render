@@ -23,7 +23,7 @@ package utils
 import (
 	"fmt"
 
-	"github.com/bhojpur/render/pkg/app"
+	engine "github.com/bhojpur/render/pkg/app"
 	"github.com/bhojpur/render/pkg/g3d/gui"
 	"github.com/bhojpur/render/pkg/math32"
 )
@@ -71,7 +71,7 @@ func (e *ErrorDialog) Show(msg string) {
 	e.msg.SetText(msg)
 	fmt.Println(msg)
 	e.SetVisible(true)
-	width, height := app.App().GetSize()
+	width, height := engine.BhojpurApp3D().GetSize()
 	px := (float32(width) - e.Width()) / 2
 	py := (float32(height) - e.Height()) / 2
 	e.SetPosition(px, py)

@@ -1,0 +1,9 @@
+{
+    "source": {
+      "include": ["pkg/javascript"]
+    },
+    "opts": {
+      "recurse": true,
+      "destination": "./docs/"
+    }
+  }

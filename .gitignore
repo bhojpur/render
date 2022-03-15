@@ -1,10 +1,19 @@
 .idea
 .vscode
-.DS_Store
 *.swp
 *.swo
 bhojpur.iml
 
+.rvmrc
+.DS_Store
+node_modules
+npm-debug.log
+package-lock.json
+dist/index.d.ts
+dist/LICENSE.md
+dist/package.json
+dist/README.md
+tmp
 test/tmp/
 
 my save path/

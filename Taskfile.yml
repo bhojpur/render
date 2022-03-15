@@ -83,15 +83,20 @@ tasks:
         cmds:
         - guiutl release -os ios -appID net.bhojpur.render -appVersion 1.0 -appBuild 1
 
-    run-web-server:
-        desc: Run the web server application from source code
+    run-web2d-gopher:
+        desc: Run the web server gopher application from source code
         cmds:
-        - GOFLAGS=-mod=mod go run server.go
+        - cd pkg/webui/bhojpur; GOFLAGS=-mod=mod go run ../../../server.go wasm
  
-    run-web-client:
-        desc: Run the web client application from source code
+    run-web2d-wasm:
+        desc: Run the web server wasm application from source code
         cmds:
-        - GOFLAGS=-mod=mod go run client.go
+        - cd pkg/webui/wasm; GOFLAGS=-mod=mod go run ../../../server.go wasm
+
+    run-web3d-editor:
+        desc: Run the web server wasm application from source code
+        cmds:
+        - cd editor; GOFLAGS=-mod=mod go run ../server.go wasm
 
     run-mobile:
         desc: Run the mobile client application on emulator

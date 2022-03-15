@@ -32,11 +32,14 @@ import (
 	"github.com/bhojpur/render/pkg/g2d/kit"
 )
 
+// Default canvas Id
+const defaultCanvasId = "canvas"
+
 type gameState struct{ laserX, laserY, directionX, directionY, laserSize float64 }
 
 var done chan struct{}
 
-var cvs *canvas.Canvas2d
+var cvs *canvas.WebGlCanvas2D
 var width float64
 var height float64
 
@@ -48,10 +51,10 @@ var renderDelay time.Duration = 20 * time.Millisecond
 func main() {
 
 	FrameRate := time.Second / renderDelay
-	println("Hello Browser FPS:", FrameRate)
-	//cvs, _ = canvas.NewCanvas2d(true)
+	println("Hello web browser frames per second:", FrameRate)
+	//cvs, _ = canvas.NewCanvas2D(defaultCanvasId, true)
 
-	cvs, _ = canvas.NewCanvas2d(false)
+	cvs, _ = canvas.NewCanvas2D(false)
 	cvs.Create(int(js.Global().Get("innerWidth").Float()*0.9), int(js.Global().Get("innerHeight").Float()*0.9)) // Make Canvas 90% of window size.  For testing rendering canvas smaller than full windows
 
 	height = float64(cvs.Height())

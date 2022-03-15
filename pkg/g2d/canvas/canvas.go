@@ -29,9 +29,13 @@ import (
 	"github.com/golang/freetype/truetype"
 )
 
+// Default canvas Id
+const defaultCanvasId = "canvas"
+
 type RenderFunc func(gc *img.GraphicContext) bool
 
-type Canvas2d struct {
+// WebGlCanvas2D is a browser-based WebGL canvas.
+type WebGlCanvas2D struct {
 	done chan struct{} // Used as part of 'run forever' in the render handler
 
 	// DOM properties
@@ -58,9 +62,12 @@ type Canvas2d struct {
 	copybuff js.Value
 }
 
-func NewCanvas2d(create bool) (*Canvas2d, error) {
+func NewCanvas2D(create bool) (*WebGlCanvas2D, error) {
+	return NewCanvas2DWithName(defaultCanvasId, create)
+}
 
-	var c Canvas2d
+func NewCanvas2DWithName(canvasId string, create bool) (*WebGlCanvas2D, error) {
+	var c WebGlCanvas2D
 
 	c.window = js.Global()
 	c.doc = c.window.Get("document")
@@ -68,7 +75,7 @@ func NewCanvas2d(create bool) (*Canvas2d, error) {
 
 	// If create, make a canvas that fills the windows
 	if create {
-		c.Create(int(c.window.Get("innerWidth").Int()), int(c.window.Get("innerHeight").Int()))
+		c.CreateWithName(canvasId, int(c.window.Get("innerWidth").Int()), int(c.window.Get("innerHeight").Int()))
 	}
 
 	return &c, nil
@@ -78,20 +85,29 @@ func NewCanvas2d(create bool) (*Canvas2d, error) {
 // This also calls Set to create relevant shadow Buffer etc
 
 // TODO suspect this needs to be fleshed out with more options
-func (c *Canvas2d) Create(width int, height int) {
+func (c *WebGlCanvas2D) Create(width int, height int) {
+	c.CreateWithName(defaultCanvasId, width, height)
+}
+
+func (c *WebGlCanvas2D) CreateWithName(canvasId string, width int, height int) {
 
 	// Make the Canvas
-	canvas := c.doc.Call("createElement", "canvas")
+	if canvasId == "" {
+		c.canvas = c.doc.Call("createElement", defaultCanvasId)
+	} else {
+		c.canvas = c.doc.Call("createElement", canvasId)
 
-	canvas.Set("height", height)
-	canvas.Set("width", width)
-	c.body.Call("appendChild", canvas)
+	}
 
-	c.Set(canvas, width, height)
+	c.canvas.Set("height", height)
+	c.canvas.Set("width", width)
+	c.body.Call("appendChild", c.canvas)
+
+	c.Set(c.canvas, width, height)
 }
 
 // Used to setup with an existing Canvas element which was obtained from JS
-func (c *Canvas2d) Set(canvas js.Value, width int, height int) {
+func (c *WebGlCanvas2D) Set(canvas js.Value, width int, height int) {
 	c.canvas = canvas
 	c.height = height
 	c.width = width
@@ -119,38 +135,38 @@ func (c *Canvas2d) Set(canvas js.Value, width int, height int) {
 }
 
 // Starts the annimationFrame callbacks running.   (Recently seperated from Create / Set to give better control for when things start / stop)
-func (c *Canvas2d) Start(maxFPS float64, rf RenderFunc) {
+func (c *WebGlCanvas2D) Start(maxFPS float64, rf RenderFunc) {
 	c.SetFPS(maxFPS)
 	c.initFrameUpdate(rf)
 }
 
 // This needs to be called on an 'beforeUnload' trigger, to properly close out the render callback, and prevent browser errors on page Refresh
-func (c *Canvas2d) Stop() {
+func (c *WebGlCanvas2D) Stop() {
 	c.window.Call("cancelAnimationFrame", c.reqID)
 	c.done <- struct{}{}
 	close(c.done)
 }
 
 // Sets the maximum FPS (Frames per Second).  This can be changed on the fly and will take affect next frame.
-func (c *Canvas2d) SetFPS(maxFPS float64) {
+func (c *WebGlCanvas2D) SetFPS(maxFPS float64) {
 	c.timeStep = 1000 / maxFPS
 }
 
 // Get the Drawing context for the Canvas
-func (c *Canvas2d) Gc() *img.GraphicContext {
+func (c *WebGlCanvas2D) Gc() *img.GraphicContext {
 	return c.gctx
 }
 
-func (c *Canvas2d) Height() int {
+func (c *WebGlCanvas2D) Height() int {
 	return c.height
 }
 
-func (c *Canvas2d) Width() int {
+func (c *WebGlCanvas2D) Width() int {
 	return c.width
 }
 
 // handles calls from Render, and copies the image over.
-func (c *Canvas2d) initFrameUpdate(rf RenderFunc) {
+func (c *WebGlCanvas2D) initFrameUpdate(rf RenderFunc) {
 	// Hold the callbacks without blocking
 	go func() {
 		var renderFrame js.Func
@@ -180,7 +196,7 @@ func (c *Canvas2d) initFrameUpdate(rf RenderFunc) {
 }
 
 // Does the actuall copy over of the image data for the 'render' call.
-func (c *Canvas2d) imgCopy() {
+func (c *WebGlCanvas2D) imgCopy() {
 	// TODO:  This currently does multiple data copies.   go image buffer -> JS Uint8Array,   Then JS Uint8Array -> ImageData,  then ImageData into the Canvas.
 	// Would like to eliminate at least one of them, however currently CopyBytesToJS only supports Uint8Array  rather than the Uint8ClampedArray of ImageData.
 

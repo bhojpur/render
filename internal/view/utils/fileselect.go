@@ -25,7 +25,7 @@ import (
 	"path/filepath"
 	"sort"
 
-	"github.com/bhojpur/render/pkg/app"
+	engine "github.com/bhojpur/render/pkg/app"
 	"github.com/bhojpur/render/pkg/g3d/gui"
 	"github.com/bhojpur/render/pkg/g3d/gui/assets/icon"
 	"github.com/bhojpur/render/pkg/math32"
@@ -105,7 +105,7 @@ func (fs *FileSelect) Show(show bool) {
 
 	if show {
 		fs.SetVisible(true)
-		width, height := app.App().GetSize()
+		width, height := engine.BhojpurApp3D().GetSize()
 		px := (float32(width) - fs.Width()) / 2
 		py := (float32(height) - fs.Height()) / 2
 		fs.SetPosition(px, py)

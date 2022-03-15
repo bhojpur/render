@@ -26,7 +26,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/bhojpur/render/pkg/app"
+	engine "github.com/bhojpur/render/pkg/app"
 	"github.com/bhojpur/render/pkg/g3d/audio"
 	"github.com/bhojpur/render/pkg/g3d/renderer"
 )
@@ -51,8 +51,8 @@ func main() {
 	}
 	fpath := args[0]
 
-	// Create application
-	app.App()
+	// Create a new 3D Rendering application
+	engine.BhojpurApp3D()
 
 	// Create player
 	player, err := audio.NewPlayer(fpath)
@@ -68,6 +68,6 @@ func main() {
 	// Start player
 	player.Play()
 
-	// Run the application
-	app.App().Run(func(renderer *renderer.Renderer, deltaTime time.Duration) {})
+	// Run the 3D Rendering application
+	engine.BhojpurApp3D().Run(func(renderer *renderer.Renderer, deltaTime time.Duration) {})
 }

@@ -477,7 +477,6 @@ func (s *Simulation) internalStep(dt float32) {
 	}
 
 	// Apply damping (only to dynamic bodies)
-	// See http://code.google.com/p/bullet/issues/detail?id=74 for details
 	for _, body := range s.bodies {
 		if body != nil && body.BodyType() == object.Dynamic {
 			body.ApplyDamping(dt)
@@ -486,7 +485,7 @@ func (s *Simulation) internalStep(dt float32) {
 
 	// TODO s.Dispatch(World_step_preStepEvent)
 
-	// Integrate the forces into velocities and the velocities into position deltas for all bodies
+	// Integrate the forces into spatial and the spatial into position deltas for all bodies
 	// TODO future: quatNormalize := s.stepnumber % (s.quatNormalizeSkip + 1) == 0
 	for _, body := range s.bodies {
 		if body != nil {

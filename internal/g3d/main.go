@@ -23,7 +23,7 @@ package main
 import (
 	"time"
 
-	"github.com/bhojpur/render/pkg/app"
+	engine "github.com/bhojpur/render/pkg/app"
 	"github.com/bhojpur/render/pkg/g3d/camera"
 	"github.com/bhojpur/render/pkg/g3d/core"
 	"github.com/bhojpur/render/pkg/g3d/gui"
@@ -37,8 +37,8 @@ import (
 
 func main() {
 
-	// Create application and scene
-	a := app.App()
+	// Create a 3D Rendering application and scene
+	a := engine.BhojpurApp3D()
 	scene := core.NewNode()
 
 	// Set the scene to be managed by the gui manager
