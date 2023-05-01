@@ -7,7 +7,7 @@ require (
 	github.com/go-gl/gl v0.0.0-20211210172815-726fda9656d6
 	github.com/go-gl/glfw/v3.3/glfw v0.0.0-20211213063430-748e38ca8aec
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
-	github.com/lib/pq v1.10.4
+	github.com/lib/pq v1.10.9
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cobra v1.3.0
 	golang.org/x/image v0.0.0-20211028202545-6944b10bf410
